@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 
 @Data
-@Component("fileNameProvider")
+@Component
 public class AppProperties implements TestConfig, TestFileNameProvider {
 
     @Value("${test.rightAnswersCountToPass}")
