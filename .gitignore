@@ -1,5 +1,5 @@
 **target/
-!.mvn/wrapper/maven-wrapper.jar
+**.mvn/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -12,6 +12,10 @@
 **.iml
 **.ipr
 **.idea/
+
+### Maven
+**mvnw
+**mvnw.cmd
 
 
 ### Mac OS ###
