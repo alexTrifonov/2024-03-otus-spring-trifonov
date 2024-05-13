@@ -16,7 +16,7 @@ public class AppProperties implements TestConfig, TestFileNameProvider, LocaleCo
     private int rightAnswersCountToPass;
 
     @Getter
-    Locale locale;
+    private Locale locale;
 
     private Map<String, String> fileNameByLocaleTag;
 

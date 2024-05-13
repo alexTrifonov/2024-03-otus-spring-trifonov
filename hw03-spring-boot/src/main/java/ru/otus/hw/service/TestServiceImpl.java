@@ -2,7 +2,6 @@ package ru.otus.hw.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.otus.hw.config.AppProperties;
 import ru.otus.hw.dao.QuestionDao;
 import ru.otus.hw.domain.Answer;
 import ru.otus.hw.domain.Question;
@@ -46,6 +45,7 @@ public class TestServiceImpl implements TestService {
     private boolean checkAnswer(Question question, int selectedAnswerCode) {
         return selectedAnswerCode == getCorrectAnswerCode(question);
     }
+
     private int getCorrectAnswerCode(Question question) {
         List<Answer> answerList = question.answers();
         int correctCode = -1;

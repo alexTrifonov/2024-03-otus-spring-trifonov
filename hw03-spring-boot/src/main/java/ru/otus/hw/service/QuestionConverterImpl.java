@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.otus.hw.domain.Question;
 
 @Service
-public class QuestionConverterImpl implements QuestionConverter{
+public class QuestionConverterImpl implements QuestionConverter {
     @Override
     public String convertQuestionToString(Question question) {
         var sb = new StringBuilder();
