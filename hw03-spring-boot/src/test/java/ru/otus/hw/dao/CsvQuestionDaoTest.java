@@ -1,5 +1,6 @@
 package ru.otus.hw.dao;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,29 +16,31 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.hw.config.AppProperties;
 import ru.otus.hw.domain.Answer;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {CsvQuestionDao.class})
-@EnableConfigurationProperties(AppProperties.class)
-@ContextConfiguration(initializers = ConfigDataApplicationContextInitializer.class)
-@ActiveProfiles("test")
 @DisplayName("Интеграционный тест класса, читающего вопросы")
 public class CsvQuestionDaoTest {
 
-    @TestConfiguration
-    @ComponentScan(basePackages = {"ru.otus.hw.config", "ru.otus.hw.dao"})
-    static class IntegrationClassConfiguration {
 
-    }
-
-    @Autowired
     private QuestionDao questionDao;
-    @Autowired
+
     private AppProperties appProperties;
+
+    @BeforeEach
+    public void setUp() {
+        appProperties = new AppProperties();
+        appProperties.setLocale("ru-RU");
+        appProperties.setFileNameByLocaleTag(new HashMap<>(){{
+            put("ru-RU", "testQuestions_ru.csv");
+            put("en-US", "testQuestion.csv");
+        }});
+        appProperties.setRightAnswersCountToPass(3);
+        questionDao = new CsvQuestionDao(appProperties);
+    }
 
     @Test
     @DisplayName("загружает все вопросы из csv файла")

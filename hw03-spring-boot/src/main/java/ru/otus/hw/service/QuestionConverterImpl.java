@@ -1,9 +1,9 @@
 package ru.otus.hw.service;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import ru.otus.hw.domain.Question;
 
-@Service
+@Component
 public class QuestionConverterImpl implements QuestionConverter {
     @Override
     public String convertQuestionToString(Question question) {
