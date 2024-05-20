@@ -1,0 +1,11 @@
+${AnsiBackground.BLACK}${AnsiColor.BRIGHT_GREEN}${AnsiBackground.BLACK}
+${AnsiBackground.BLACK}${AnsiColor.BRIGHT_GREEN}     _             _            _     _            _   _${AnsiBackground.BLACK}
+${AnsiBackground.BLACK}${AnsiColor.BRIGHT_GREEN}    | |           | |          | |   | |          | | (_)${AnsiBackground.BLACK}
+${AnsiBackground.BLACK}${AnsiColor.BRIGHT_GREEN} ___| |_ _   _  __| | ___ _ __ | |_  | |_ ___  ___| |_ _ _ __   __ _${AnsiBackground.BLACK}
+${AnsiBackground.BLACK}${AnsiColor.BRIGHT_GREEN}/ __| __| | | |/ _` |/ _ \ '_ \| __| | __/ _ \/ __| __| | '_ \ / _` |${AnsiBackground.BLACK}
+${AnsiBackground.BLACK}${AnsiColor.BRIGHT_GREEN}\__ \ |_| |_| | (_| |  __/ | | | |_  | ||  __/\__ \ |_| | | | | (_| |  _ _ _${AnsiBackground.BLACK}
+${AnsiBackground.BLACK}${AnsiColor.BRIGHT_GREEN}|___/\__|\__,_|\__,_|\___|_| |_|\__|  \__\___||___/\__|_|_| |_|\__, | (_|_|_)${AnsiBackground.BLACK}
+${AnsiBackground.BLACK}${AnsiColor.BRIGHT_GREEN}                                                                __/ |${AnsiBackground.BLACK}
+${AnsiBackground.BLACK}${AnsiColor.BRIGHT_GREEN}                                                               |___/${AnsiBackground.BLACK}
+${AnsiBackground.BLACK}${AnsiColor.BRIGHT_GREEN}${AnsiBackground.BLACK}
+${AnsiBackground.DEFAULT}
