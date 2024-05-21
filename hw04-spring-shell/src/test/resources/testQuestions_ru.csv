@@ -1,0 +1,6 @@
+# Добавить сюда своих вопросов. Эту строку надо пропустить при настройке CsvToBean (withSkipLines)
+Есть ли жизнь на Марсе?;Это науке пока не известно%true|Конечно. Красные (НЛО) это с Марса. А зеленые (НЛО) с Венеры%false|Точно нет%false
+Как нужно загружать ресурс из jar в Java?;ClassLoader#getResourceAsStream или ClassPathResource#getInputStream%true|ClassLoader#getResource#getFile + FileReader%false|Wingardium Leviosa%false
+Как называется аннотация для указания файла с настройками для тестов?;@PropertySource%false|@TestPropertySource%true
+Какая стратегия маппинга используется, если класс отображаемый на csv файл, размечен аннотациями, и также используется CsvToBeanBuilder?;HeaderColumnNameMappingStrategy%false|Подходящая стратегия маппинга определяется автоматически, и вам не нужно беспокоиться о дополнительных настройках%true|ColumnPositionMappingStrategy%false
+Какой класс реализации Spring контекста использует конфигурацию из xml файла?;ClassPathXmlApplicationContext%true|AnnotationConfigApplicationContext%false|GenericGroovyApplicationContext%false
