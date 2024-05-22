@@ -1,17 +1,17 @@
 package ru.otus.hw.dao;
 
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.otus.hw.config.AppProperties;
 import ru.otus.hw.domain.Answer;
 
-import java.util.Locale;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import static org.mockito.Mockito.when;
 
 
 @SpringBootTest
@@ -21,8 +21,13 @@ public class CsvQuestionDaoTest {
     @Autowired
     private QuestionDao questionDao;
 
-    @Autowired
+    @MockBean
     private AppProperties appProperties;
+
+    @BeforeEach
+    public void setUp() {
+        when(appProperties.getTestFileName()).thenReturn("testQuestions_ru.csv");
+    }
 
     @Test
     @DisplayName("загружает все вопросы из csv файла")
@@ -35,14 +40,8 @@ public class CsvQuestionDaoTest {
     public void shouldCorrectParse() {
         var questionList = questionDao.findAll();
         var question = questionList.get(2);
-        if (Locale.forLanguageTag("en-US").equals(appProperties.getLocale())) {
-            assertEquals("What is the name of the annotation for specifying a file with settings for tests?",
-                    question.text());
-        }
-        if (Locale.forLanguageTag("ru-RU").equals(appProperties.getLocale())) {
-            assertEquals("Как называется аннотация для указания файла с настройками для тестов?",
-                    question.text());
-        }
+        assertEquals("Как называется аннотация для указания файла с настройками для тестов?",
+                question.text());
         assertEquals(2, question.answers().size());
         assertEquals("@TestPropertySource", question.answers().stream()
                 .filter(Answer::isCorrect)
