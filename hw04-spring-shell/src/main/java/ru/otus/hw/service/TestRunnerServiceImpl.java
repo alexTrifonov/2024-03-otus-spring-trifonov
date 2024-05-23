@@ -16,6 +16,5 @@ public class TestRunnerServiceImpl implements TestRunnerService {
     public void run(Student student) {
         var testResult = testService.executeTestFor(student);
         resultService.showResult(testResult);
-        System.exit(0);
     }
 }

@@ -7,26 +7,17 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
 import ru.otus.hw.security.LoginContext;
 import ru.otus.hw.service.LocalizedMessagesService;
-import ru.otus.hw.service.StudentService;
 import ru.otus.hw.service.TestRunnerService;
 
 @ShellComponent
 @RequiredArgsConstructor
-public class Command {
-
-    private final StudentService studentService;
-
-    private final LoginContext loginContext;
+public class TestCommand {
 
     private final TestRunnerService testRunnerService;
 
     private final LocalizedMessagesService localizedMessagesService;
 
-    @ShellMethod(value = "Login command", key = {"login", "l"})
-    public void login() {
-        var student = studentService.determineCurrentStudent();
-        loginContext.login(student);
-    }
+    private final LoginContext loginContext;
 
     @ShellMethod(value = "Test executing command", key = {"test-run", "test", "t"})
     @ShellMethodAvailability(value = "isTestRunAvailable")
@@ -39,5 +30,4 @@ public class Command {
                 ? Availability.available()
                 : Availability.unavailable(localizedMessagesService.getMessage("Login.prompt"));
     }
-
 }

@@ -7,7 +7,6 @@ import ru.otus.hw.domain.Student;
 
 @RequiredArgsConstructor
 @Service
-@Getter
 public class StudentServiceImpl implements StudentService {
 
     private final LocalizedIOService ioService;
