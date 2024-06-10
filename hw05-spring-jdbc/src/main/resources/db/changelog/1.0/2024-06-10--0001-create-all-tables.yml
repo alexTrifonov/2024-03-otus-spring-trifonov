@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2024-06-10-create-all-tables
+      author: alexTrifonov
+      changes:
+          - createTable:
+                tableName: authors
+                columns:
+                    - column:
+                          name: id
+                          type: bigserial
+                          constraints:
+                              primaryKey: true
+                              nullable: false
+                              primaryKeyName: pk_author
+                    - column:
+                          name: full_name
+                          type: varchar(255)
+          - createTable:
+                tableName: genres
+                columns:
+                    - column:
+                          name: id
+                          type: bigserial
+                          constraints:
+                              primaryKey: true
+                              nullable: false
+                              primaryKeyName: pk_genre
+                    - column:
+                          name: name
+                          type: varchar(255)
+          - createTable:
+                tableName: books
+                columns:
+                    - column:
+                          name: id
+                          type: bigserial
+                          constraints:
+                              primaryKey: true
+                              nullable: false
+                              primaryKeyName: pk_book
+                    - column:
+                          name: title
+                          type: varchar(255)
+                    - column:
+                          name: author_id
+                          type: bigint
+                          constraints:
+                              referencedTableName: authors
+                              referencedColumnNames: id
+                              foreignKeyName: author_id
+                    - column:
+                          name: genre_id
+                          type: bigint
+                          constraints:
+                              referencedTableName: genres
+                              referencedColumnNames: id
+                              foreignKeyName: genre_id
