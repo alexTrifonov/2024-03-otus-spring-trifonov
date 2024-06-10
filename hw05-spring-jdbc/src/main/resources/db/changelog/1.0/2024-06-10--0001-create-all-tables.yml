@@ -49,6 +49,7 @@ databaseChangeLog:
                               referencedTableName: authors
                               referencedColumnNames: id
                               foreignKeyName: author_id
+                              deleteCascade: true
                     - column:
                           name: genre_id
                           type: bigint
@@ -56,3 +57,4 @@ databaseChangeLog:
                               referencedTableName: genres
                               referencedColumnNames: id
                               foreignKeyName: genre_id
+                              deleteCascade: true
