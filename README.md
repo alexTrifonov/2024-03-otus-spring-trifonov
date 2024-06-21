@@ -6,3 +6,4 @@
 2. ДЗ "Конфигурирование Spring-приложений" в папке 02-annotation-config
 3. ДЗ "Перенос приложения для тестирования студентов на Spring Boot" в папке hw03-spring-boot
 4. ДЗ "Перенос приложения для проведения опросов на Spring Shell" в папке hw04-spring-shell
+5. ДЗ "Приложение, каталог книг в библиотеке на spring jdbc, команды на spring shell" в папке hw05-spring-jdbc
