@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NamedQuery(name = "findAllAuthors", query = "select a from Author a")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

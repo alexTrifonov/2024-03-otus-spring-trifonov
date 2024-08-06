@@ -3,14 +3,15 @@ package ru.otus.hw.repositories;
 import jakarta.persistence.EntityGraph;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import ru.otus.hw.models.Book;
 import ru.otus.hw.models.Comment;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.springframework.data.jpa.repository.EntityGraph.EntityGraphType.FETCH;
@@ -41,17 +42,18 @@ public class JpaCommentRepository implements CommentRepository {
 
     @Override
     public void deleteById(long id) {
-        Query query = em.createQuery("delete from Comment c where c.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+        em.remove(em.find(Comment.class, id));
     }
 
     @Override
     public List<Comment> findByBookId(long id) {
-        EntityGraph<?> entityGraphComment = em.getEntityGraph("comment-book-graph");
-        TypedQuery<Comment> query = em.createQuery("select c from Comment c where c.book.id = :id", Comment.class);
-        query.setParameter("id", id);
-        query.setHint(FETCH.getKey(), entityGraphComment);
-        return query.getResultList();
+        EntityGraph<?> entityGraph = em.getEntityGraph("book-author-genre-entity-graph");
+        Map<String, Object> properties = new HashMap<>();
+        properties.put(FETCH.getKey(), entityGraph);
+        em.find(Book.class, id, properties);
+
+        var queryComment = em.createQuery("select c from Comment c where c.book.id = :id", Comment.class);
+        queryComment.setParameter("id", id);
+        return queryComment.getResultList();
     }
 }

@@ -98,7 +98,7 @@ public class JpaCommentRepositoryTest {
     void shouldDeleteComment() {
         assertThat(testEntityManager.find(Comment.class, 1L)).isNotNull();
         commentRepository.deleteById(1L);
-        testEntityManager.clear();
+        testEntityManager.flush();
         assertThat(testEntityManager.find(Comment.class, 1L)).isNull();
     }
 

@@ -89,7 +89,7 @@ public class JpaBookRepositoryTest {
     void shouldDeleteBook() {
         assertThat(testEntityManager.find(Book.class, 1L)).isNotNull();
         jpaBookRepository.deleteById(1L);
-        testEntityManager.clear();
+        testEntityManager.flush();
         assertThat(testEntityManager.find(Book.class, 1L)).isNull();
     }
 

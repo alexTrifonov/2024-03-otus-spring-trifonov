@@ -1,5 +1,6 @@
 package ru.otus.hw.services;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import ru.otus.hw.repositories.JpaGenreRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,18 +30,22 @@ public class BookServiceTest {
     @Autowired
     private BookServiceImpl bookService;
 
-    @Autowired
-    private AuthorServiceImpl authorService;
+    private List<Author> dbAuthors;
 
-    @Autowired
-    private GenreServiceImpl genreService;
+    private List<Genre> dbGenres;
+
+    @BeforeEach
+    void setUp() {
+        dbAuthors = getDbAuthors();
+        dbGenres = getDbGenres();
+    }
 
     @Test
     @DisplayName("должен находить книгу по id")
     public void shouldFindBookById() {
         Optional<Book> book = bookService.findById(1L);
-        Author author = authorService.findAll().get(0);
-        Genre genre = genreService.findAll().get(0);
+        Author author = dbAuthors.get(0);
+        Genre genre = dbGenres.get(0);
         Book expectedBook = new Book(1L, "BookTitle_1", author, genre);
         assertThat(book).isPresent()
                 .get()
@@ -56,8 +62,8 @@ public class BookServiceTest {
     @Test
     @DisplayName("должен создавать книгу")
     public void shouldSaveBook() {
-        Author author = authorService.findAll().get(0);
-        Genre genre = genreService.findAll().get(0);
+        Author author = dbAuthors.get(0);
+        Genre genre = dbGenres.get(0);
         Book persistBook = bookService.insert("BookTitle", author.getId(), genre.getId());
         Book expectedBook = bookService.findById(persistBook.getId()).orElse(new Book());
         assertThat(expectedBook).usingRecursiveComparison().isEqualTo(persistBook);
@@ -70,8 +76,8 @@ public class BookServiceTest {
     @Test
     @DisplayName("должен обновлять книгу")
     public void shouldUpdateBook() {
-        Author author = authorService.findAll().get(0);
-        Genre genre = genreService.findAll().get(0);
+        Author author = dbAuthors.get(0);
+        Genre genre = dbGenres.get(0);
 
         Book expectedBook = new Book(1L, "newBookTitle", author, genre);
         Book persistBook = bookService.findById(expectedBook.getId()).orElse(new Book());
@@ -104,5 +110,17 @@ public class BookServiceTest {
         //восстановление исходного состояния БД для других тестов. я не нашел как это сделать лучше
         //если знаете решение лучше - подскажите конкретно как сделать
         bookService.update(book.getId(), book.getTitle(), book.getAuthor().getId(), book.getGenre().getId());
+    }
+
+    private static List<Author> getDbAuthors() {
+        return IntStream.range(1, 4).boxed()
+                .map(id -> new Author(id, "Author_" + id))
+                .toList();
+    }
+
+    private static List<Genre> getDbGenres() {
+        return IntStream.range(1, 4).boxed()
+                .map(id -> new Genre(id, "Genre_" + id))
+                .toList();
     }
 }
