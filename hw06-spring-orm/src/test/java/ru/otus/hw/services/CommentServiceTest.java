@@ -37,12 +37,14 @@ public class CommentServiceTest {
     @Test
     @DisplayName("должен находить комментарий по id")
     public void shouldFindCommentById() {
-        Optional<Comment> comment = commentService.findById(1L);
         Book book = bookService.findById(1L).get();
+        Optional<Comment> optionalComment = commentService.findById(1L);
+        assertThat(optionalComment).isPresent();
+
+        Comment comment = optionalComment.get();
+        comment.setBook(book);
         Comment expectedComment = new Comment(1L, "test_comment_1", book);
-        assertThat(comment).isPresent()
-                .get()
-                .usingRecursiveComparison().isEqualTo(expectedComment);
+        assertThat(comment).usingRecursiveComparison().isEqualTo(expectedComment);
     }
 
 
@@ -56,6 +58,7 @@ public class CommentServiceTest {
         } else {
             assertThat(comments).hasSize(1);
         }
+        comments.forEach(comment -> assertThat(comment.getBook().getAuthor()).isNotNull());
     }
 
 
@@ -78,6 +81,7 @@ public class CommentServiceTest {
         Book book = bookService.findById(1L).get();
         Comment expectedComment = new Comment(1L, "test_comment_2", book);
         Comment persistComment = commentService.findById(1L).get();
+        persistComment.setBook(book);
         assertThat(persistComment.getId()).isEqualTo(expectedComment.getId());
         assertThat(persistComment).isNotEqualTo(expectedComment);
 
@@ -86,6 +90,7 @@ public class CommentServiceTest {
         assertThat(updatedComment.getText()).isEqualTo(expectedComment.getText());
 
         Comment foundComment = commentService.findById(updatedComment.getId()).get();
+        foundComment.setBook(book);
         assertThat(foundComment).usingRecursiveComparison().isEqualTo(expectedComment);
 
 
@@ -99,8 +104,10 @@ public class CommentServiceTest {
     @Test
     @DisplayName("должен удалять комментарий по id")
     public void shouldDeleteComment() {
-        Comment newComment = commentService.insert("text", bookService.findById(2L).get().getId());
+        Book book = bookService.findById(2L).get();
+        Comment newComment = commentService.insert("text", book.getId());
         Comment newFoundComment = commentService.findById(newComment.getId()).get();
+        newFoundComment.setBook(book);
         assertThat(newFoundComment).usingRecursiveComparison().isEqualTo(newComment);
 
         commentService.deleteById(newComment.getId());

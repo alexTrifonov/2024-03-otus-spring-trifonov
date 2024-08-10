@@ -25,9 +25,10 @@ public class JpaCommentRepository implements CommentRepository {
 
     @Override
     public Optional<Comment> findById(long id) {
-        EntityGraph<?> entityGraphComment = em.getEntityGraph("comment-book-graph");
-        return Optional.ofNullable(em.find(Comment.class, id,
-                Collections.singletonMap(FETCH.getKey(), entityGraphComment)));
+//        EntityGraph<?> entityGraphComment = em.getEntityGraph("comment-book-graph");
+//        return Optional.ofNullable(em.find(Comment.class, id,
+//                Collections.singletonMap(FETCH.getKey(), entityGraphComment)));
+        return Optional.ofNullable(em.find(Comment.class, id));
     }
 
     @Override
