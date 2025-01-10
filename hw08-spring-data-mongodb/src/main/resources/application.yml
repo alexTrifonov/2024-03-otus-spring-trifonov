@@ -1,0 +1,19 @@
+spring:
+  data:
+    mongodb:
+      database: main_db
+      port: 27017
+      host: localhost
+  shell:
+    interactive:
+      enabled: true
+
+mongock:
+  runner-type: "InitializingBean"
+  change-logs-scan-package: ru.otus.hw.changelog
+
+changelog:
+  author-file: "authors.csv"
+  genre-file: "genres.csv"
+  book-file: "books.csv"
+  comment-file: "comments.csv"
