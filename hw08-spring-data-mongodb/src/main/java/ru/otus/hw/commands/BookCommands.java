@@ -4,11 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.otus.hw.converters.BookConverter;
-import ru.otus.hw.models.Comment;
 import ru.otus.hw.services.BookService;
-import ru.otus.hw.services.CommentService;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @SuppressWarnings({"SpellCheckingInspection", "unused"})
@@ -19,8 +16,6 @@ public class BookCommands {
     private final BookService bookService;
 
     private final BookConverter bookConverter;
-
-    private final CommentService commentService;
 
     @ShellMethod(value = "Find all books", key = "ab")
     public String findAllBooks() {
@@ -53,8 +48,6 @@ public class BookCommands {
     // bdel 4
     @ShellMethod(value = "Delete book by id", key = "bdel")
     public void deleteBook(String id) {
-        List<Comment> comments = commentService.findByBookId(id);
-        comments.forEach(commentService::delete);
         bookService.deleteById(id);
     }
 }

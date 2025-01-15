@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Репозиторий на основе JPA для работы с комментариями")
 @DataMongoTest
-@ComponentScan({"ru.otus.hw.services", "ru.otus.hw.repositories"})
+@ComponentScan("ru.otus.hw.repositories")
 public class CommentRepositoryTest {
 
     @Autowired

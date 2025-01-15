@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 @ChangeLog
 public class DatabaseChangelog {
 
-    @ChangeSet(order = "001", id = "dropDb", author = "stvort", runAlways = true)
+    @ChangeSet(order = "001", id = "dropDb", author = "alexTrifonov", runAlways = true)
     public void dropDb(MongoDatabase db) {
         db.drop();
     }
