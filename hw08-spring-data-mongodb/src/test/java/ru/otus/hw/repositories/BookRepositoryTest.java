@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Репозиторий на основе JPA для работы с книгами")
 @DataMongoTest
-@ComponentScan("ru.otus.hw.repositories")
+@ComponentScan("ru.otus.hw.services")
 public class BookRepositoryTest {
     @Autowired
     private BookRepository bookRepository;
