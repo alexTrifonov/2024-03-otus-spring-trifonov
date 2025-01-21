@@ -1,15 +1,10 @@
 package ru.otus.hw.services;
 
 import lombok.RequiredArgsConstructor;
-import lombok.val;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.hw.exceptions.EntityNotFoundException;
 import ru.otus.hw.models.Book;
-import ru.otus.hw.models.Comment;
 import ru.otus.hw.repositories.AuthorRepository;
 import ru.otus.hw.repositories.BookRepository;
 import ru.otus.hw.repositories.CommentRepository;
@@ -28,8 +23,6 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
 
     private final CommentRepository commentRepository;
-
-    private final MongoTemplate mongoTemplate;
 
     @Override()
     public Optional<Book> findById(String id) {
@@ -61,9 +54,7 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public void deleteById(String id) {
-        Book book = bookRepository.findById(id).get();
-        val query = new Query(Criteria.where("book").is(book));
-        mongoTemplate.remove(query, Comment.class);
+        commentRepository.deleteAllByBookId(id);
         bookRepository.deleteById(id);
     }
 
