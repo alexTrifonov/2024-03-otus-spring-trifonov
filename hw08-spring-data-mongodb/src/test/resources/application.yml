@@ -1,0 +1,29 @@
+spring:
+  data:
+    mongodb:
+      port: 0
+      database: test_db
+      host: localhost
+  shell:
+    interactive:
+      enabled: false
+
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 4.0.2
+
+mongock:
+  runner-type: "ApplicationRunner"
+  change-logs-scan-package: ru.otus.hw.changelog.test
+  mongo-db:
+    write-concern:
+      journal: false
+    read-concern: local
+
+changelog:
+  author-file: "authors-test.csv"
+  genre-file: "genres-test.csv"
+  book-file: "books-test.csv"
+  comment-file: "comments-test.csv"
