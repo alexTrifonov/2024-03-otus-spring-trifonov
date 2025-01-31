@@ -71,7 +71,7 @@ public class BookControllerTest {
                 .map(GenreDto::fromGenre).toList();
         when(authorService.findAll()).thenReturn(getDbAuthors());
         when(genreService.findAll()).thenReturn(getDbGenres());
-        mockMvc.perform(get("/edit-book").param("id", "1"))
+        mockMvc.perform(get("/edit-book/{id}", "1"))
                 .andExpect(view().name("editBook"))
                 .andExpect(model().attribute("book", expectedBookDto))
                 .andExpect(model().attribute("authors", expectedAuthors))
@@ -125,7 +125,7 @@ public class BookControllerTest {
     @Test
     @DisplayName("должен рендерить страницу с информацией об успешном удалении книги")
     void shouldRenderDeleteBookPageAndDeleteBook() throws Exception {
-        mockMvc.perform(get("/delete-book").param("id", "1"))
+        mockMvc.perform(post("/delete-book/{id}", "1"))
                 .andExpect(view().name("deleteBook"));
         verify(bookService, times(1)).deleteById(any(Long.class));
     }
@@ -134,7 +134,7 @@ public class BookControllerTest {
     @DisplayName("должен рендерить страницу ошибки если книга не найдена")
     void shouldRenderErrorPageWhenBookNotFound() throws Exception {
         when(bookService.findById(1L)).thenReturn(Optional.empty());
-        mockMvc.perform(get("/edit-book").param("id", "1"))
+        mockMvc.perform(get("/edit-book/{id}", "1"))
                 .andExpect(view().name("error"));
     }
 

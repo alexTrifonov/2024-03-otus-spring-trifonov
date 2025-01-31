@@ -7,9 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.otus.hw.dto.AuthorDto;
 import ru.otus.hw.dto.BookDto;
@@ -48,7 +51,7 @@ public class BookController {
     }
 
     @PostMapping("/add-book")
-    public String addBook(@ModelAttribute("book") BookDto bookDto, BindingResult bindingResult) {
+    public String addBook(@Valid @ModelAttribute("book") BookDto bookDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(error -> log.error(error.getDefaultMessage()));
             return "addBook";
@@ -56,14 +59,14 @@ public class BookController {
         return saveBook(bookDto);
     }
 
-    @GetMapping("/delete-book")
-    public String deleteBook(@RequestParam("id") long id) {
+    @PostMapping("/delete-book/{id}")
+    public String deleteBook(@PathVariable("id") long id) {
         bookService.deleteById(id);
         return "deleteBook";
     }
 
-    @GetMapping("/edit-book")
-    public String editBook(Model model, @RequestParam("id") Long id) {
+    @GetMapping("/edit-book/{id}")
+    public String editBook(Model model, @PathVariable("id") Long id) {
         BookDto bookDto = bookService.findById(id)
                 .map(BookDto::fromBook)
                         .orElseThrow(EntityNotFoundException::new);

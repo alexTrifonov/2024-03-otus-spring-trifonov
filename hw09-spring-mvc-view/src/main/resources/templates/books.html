@@ -49,10 +49,15 @@
         <td th:text="${book.genreDto().name()}">a Genre</td>
         <td>
             <div class="action">
-                <a href="editBook.html" th:href="@{/edit-book(id=${book.id})}">Edit</a>
-                <a href="deleteBook.html" th:href="@{/delete-book(id=${book.id})}">Delete</a>
+                <a href="editBook.html" th:href="@{/edit-book/{id}(id=${book.id})}">Edit</a>
                 <a href="comments.html" th:href="@{/comments(bookId=${book.id})}">Comments</a>
+                <form action="books.html" th:action="@{/delete-book/{id}(id=${book.id})}" th:method="post">
+                    <div class="row">
+                        <button>Delete</button>
+                    </div>
+                </form>
             </div>
+
         </td>
     </tr>
     </tbody>
