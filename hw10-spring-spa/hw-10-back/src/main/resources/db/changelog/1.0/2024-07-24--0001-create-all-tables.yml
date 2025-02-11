@@ -1,0 +1,84 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2024-07-24-create-all-tables
+      author: alexTrifonov
+      changes:
+        - createTable:
+            tableName: authors
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    primaryKeyName: pk_author
+              - column:
+                  name: full_name
+                  type: varchar(255)
+        - createTable:
+            tableName: genres
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    primaryKeyName: pk_genre
+              - column:
+                  name: name
+                  type: varchar(255)
+        - createTable:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    primaryKeyName: pk_book
+              - column:
+                  name: title
+                  type: varchar(255)
+              - column:
+                  name: author_id
+                  type: bigint
+                  constraints:
+                    referencedTableName: authors
+                    referencedColumnNames: id
+                    foreignKeyName: author_id
+                    deleteCascade: true
+              - column:
+                  name: genre_id
+                  type: bigint
+                  constraints:
+                    referencedTableName: genres
+                    referencedColumnNames: id
+                    foreignKeyName: genre_id
+                    deleteCascade: true
+        - createTable:
+            tableName: comments
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    primaryKeyName: pk_comment
+              - column:
+                  name: text
+                  type: varchar(1000)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: book_id
+                  type: bigint
+                  constraints:
+                    referencedTableName: books
+                    referencedColumnNames: id
+                    foreignKeyName: book_id
+                    deleteCascade: true
+
