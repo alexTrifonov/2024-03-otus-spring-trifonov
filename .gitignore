@@ -23,3 +23,39 @@
 
 ###log
 **.log
+
+### VS Code ###
+**.vscode/
+
+# Logs
+**logs
+**npm-debug.log*
+**yarn-debug.log*
+**yarn-error.log*
+**pnpm-debug.log*
+**lerna-debug.log*
+
+**node_modules
+**dist
+**dist-ssr
+**coverage
+*.local
+
+**/cypress/videos/
+**/cypress/screenshots/
+
+# Editor directories and files
+**.vscode/*
+**.suo
+**.ntvs*
+**.njsproj
+**.sln
+**.sw?
+
+**.tsbuildinfo
+
+**node
+**npm
+**npm.cmd
+**npx
+**npx.cmd

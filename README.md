@@ -11,3 +11,4 @@
 7. ДЗ "Библиотека книг на Spring Data JPA" в папке hw-07-spring-data-jpa
 8. ДЗ "Использовать MongoDB и spring-data для хранения информации о книгах" в папке hw08-spring-data-mongodb
 9. ДЗ "CRUD приложение с Web UI и хранением данных в БД" в папке hw09-spring-mvc-view
+10. ДЗ "Приложение с использованием AJAX и REST-контроллеров" в папке hw10-spring-spa
