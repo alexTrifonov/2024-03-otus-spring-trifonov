@@ -1,0 +1,1 @@
+import{_ as e,c as r,a as t,o as s}from"./index-CJCJ3rio.js";const a={name:"ErrorComponent"};function n(c,o,p,d,_,f){return s(),r("div",null,o[0]||(o[0]=[t("h1",{class:"h1"},"Oops! Not today",-1)]))}const m=e(a,[["render",n],["__scopeId","data-v-5f4f9789"]]);export{m as default};
