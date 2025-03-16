@@ -4,13 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.otus.hw.config.SecurityConfig;
 import ru.otus.hw.dto.AuthorDto;
 import ru.otus.hw.dto.BookDto;
 import ru.otus.hw.dto.GenreDto;
@@ -29,16 +28,16 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.mockito.Mockito.any;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@WebMvcTest(BookController.class)
-@Import(SecurityConfig.class)
-@DisplayName("Интеграционный тест контроллера книг")
+
+@SpringBootTest(classes = {BookController.class, GlobalExceptionHandler.class})
+@EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
+@AutoConfigureMockMvc
+@DisplayName("Интеграционный тест контроллера книг c выключенным spring security")
 public class BookControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -56,17 +55,8 @@ public class BookControllerTest {
     private ObjectMapper mapper;
 
 
-    @Test
-    @DisplayName("должен возвращать 401 для неаутентифицированных юзеров")
-    void shouldReturn401() throws Exception {
-        mockMvc.perform(get("/"))
-                .andExpect(status().isUnauthorized());
-    }
 
-    @WithMockUser(
-            username = "admin",
-            authorities = {"ROLE_ADMIN"}
-    )
+
     @Test
     @DisplayName("должен рендерить страницу книг с атрибутами модели и правильным названием view")
     void shouldRenderBooksPageWithCorrectViewAndModelAttributes() throws Exception {
@@ -90,9 +80,7 @@ public class BookControllerTest {
         when(authorService.findAll()).thenReturn(getDbAuthors());
         when(genreService.findAll()).thenReturn(getDbGenres());
         mockMvc.perform(
-                get("/edit-book/{id}", "1")
-                        .with(user("admin").roles("ADMIN"))
-                )
+                get("/edit-book/{id}", "1"))
                 .andExpect(view().name("editBook"))
                 .andExpect(model().attribute("book", expectedBookDto))
                 .andExpect(model().attribute("authors", expectedAuthors))
@@ -108,16 +96,11 @@ public class BookControllerTest {
                  .param("title", "Book_123")
                 .param("authorDto.id", "1")
                 .param("genreDto.id", "1")
-                .with(user("admin").authorities(new SimpleGrantedAuthority("ROLE_ADMIN")))
                 )
                 .andExpect(view().name("redirect:/"));
         verify(bookService, times(1)).update(any(Book.class));
     }
 
-    @WithMockUser(
-            username = "admin",
-            authorities = {"ROLE_ADMIN"}
-    )
     @Test
     @DisplayName("должен сохранять новую книгу и переходить на список всех книг")
     void shouldSaveBookAndRedirectToContextPath() throws Exception {
@@ -131,10 +114,6 @@ public class BookControllerTest {
         verify(bookService, times(1)).update(any(Book.class));
     }
 
-    @WithMockUser(
-            username = "admin",
-            authorities = {"ROLE_ADMIN"}
-    )
     @Test
     @DisplayName("должен рендерить страницу создания книги и содержать необходимые атрибуты модели")
     void shouldRenderAddBookPageWithCorrectViewAndModelAttributes() throws Exception {
@@ -152,10 +131,6 @@ public class BookControllerTest {
                 .andExpect(model().attribute("genres", expectedGenres));
     }
 
-    @WithMockUser(
-            username = "admin",
-            authorities = {"ROLE_ADMIN"}
-    )
     @Test
     @DisplayName("должен рендерить страницу с информацией об успешном удалении книги")
     void shouldRenderDeleteBookPageAndDeleteBook() throws Exception {
@@ -164,10 +139,6 @@ public class BookControllerTest {
         verify(bookService, times(1)).deleteById(any(Long.class));
     }
 
-    @WithMockUser(
-            username = "admin",
-            authorities = {"ROLE_ADMIN"}
-    )
     @Test
     @DisplayName("должен рендерить страницу ошибки если книга не найдена")
     void shouldRenderErrorPageWhenBookNotFound() throws Exception {

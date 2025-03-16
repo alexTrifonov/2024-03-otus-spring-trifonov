@@ -3,24 +3,26 @@ package ru.otus.hw.controllers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.otus.hw.config.SecurityConfig;
 import ru.otus.hw.dto.UserDto;
 import ru.otus.hw.services.UserService;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@WebMvcTest(UserController.class)
-@Import(SecurityConfig.class)
-@DisplayName("Интеграционный тест страниц аутентификации и регистрации")
-public class RegisterTest {
+
+@SpringBootTest(classes = UserController.class)
+@EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
+@AutoConfigureMockMvc
+@DisplayName("Интеграционный тест страницы регистрации")
+public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 

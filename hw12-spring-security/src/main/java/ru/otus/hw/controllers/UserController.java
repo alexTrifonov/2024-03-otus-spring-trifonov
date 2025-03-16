@@ -35,9 +35,7 @@ public class UserController {
             bindingResult.getAllErrors().forEach(error -> log.error(error.getDefaultMessage()));
             return "register";
         }
-        User user = new User();
-        user.setLogin(userDto.login());
-        user.setPassword(passwordEncoder.encode(userDto.password()));
+        User user = new User(null, userDto.login(), passwordEncoder.encode(userDto.password()));
         userService.save(user);
         return "redirect:/";
     }

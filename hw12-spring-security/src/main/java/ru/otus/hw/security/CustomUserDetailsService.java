@@ -1,5 +1,6 @@
 package ru.otus.hw.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,10 +10,10 @@ import ru.otus.hw.services.UserService;
 
 
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
